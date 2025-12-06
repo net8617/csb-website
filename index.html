@@ -9,26 +9,20 @@
 body {
     margin: 0;
     padding: 0;
+    background: #000;
     font-family: 'Courier New', monospace;
     color: #00ffe5;
     overflow: hidden;
+    user-select: none;
 }
 
-/* Video Background */
-#bg-video {
+/* Matrix Background */
+#matrix {
     position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -2;
-}
-
-/* Dark Overlay */
-#overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
 }
 
@@ -43,9 +37,9 @@ body {
     animation: logoGlow 2s infinite alternate;
 }
 @keyframes logoGlow {
-    0% { box-shadow: 0 0 10px #00ffe5; }
-    50% { box-shadow: 0 0 25px #00ffe5; }
-    100% { box-shadow: 0 0 40px #00ffe5; }
+    0% { filter: drop-shadow(0 0 10px #00ffe5); }
+    50% { filter: drop-shadow(0 0 25px #00ffe5); }
+    100% { filter: drop-shadow(0 0 40px #00ffe5); }
 }
 
 /* Typing Box */
@@ -57,7 +51,7 @@ body {
     border: 2px solid #00ffe5;
     border-radius: 15px;
     box-shadow: 0 0 40px #00ffe5;
-    background: rgba(0,0,0,0.55);
+    background: rgba(0,0,0,0.5);
     font-size: 20px;
     line-height: 1.6;
     min-height: 200px;
@@ -73,7 +67,7 @@ body {
     border: 2px solid #FFD700;
     border-radius: 12px;
     box-shadow: 0 0 20px #FFD700;
-    background: rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.35);
     text-align: center;
 }
 #fb-box a {
@@ -89,29 +83,18 @@ body {
     filter: drop-shadow(0 0 5px #FFD700);
 }
 
-/* Mobile Tap Layer */
+/* Hidden Tap Layer for Mobile Autoplay */
 #tapLayer {
     position: fixed;
     inset: 0;
     z-index: 9999;
-}
-
-/* Responsive */
-@media(max-width:600px){
-    #logo { width: 140px; height: 140px; }
-    #box { font-size: 16px; padding: 20px; }
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎥 VIDEO BACKGROUND -->
-<video id="bg-video" autoplay muted loop playsinline>
-    <source src="background.mp4" type="video/mp4">
-</video>
-
-<div id="overlay"></div>
+<canvas id="matrix"></canvas>
 
 <img id="logo" src="https://a.top4top.io/p_3624uj0nd5.jpg">
 
@@ -121,21 +104,21 @@ body {
 
 <div id="fb-box">
     <a href="https://www.facebook.com/share/1Xq35NHx5J/" target="_blank">
-        <img id="fb-icon"
-        src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg">
+        <img id="fb-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg">
         ALEX HUNTER
     </a>
 </div>
 
-<!-- 🔊 AUTO SONG -->
+<!-- ✅ AUTO SONG -->
 <audio id="bg-music" autoplay loop>
     <source src="আম্মু জান.mp3" type="audio/mpeg">
 </audio>
 
+<!-- ✅ Tap Layer (Mobile Fix) -->
 <div id="tapLayer"></div>
 
 <script>
-/* Mobile Song Fix */
+/* ✅ 100% Mobile Autoplay Fix */
 const music = document.getElementById("bg-music");
 const tap = document.getElementById("tapLayer");
 
@@ -150,13 +133,41 @@ tap.addEventListener("click", () => {
     tap.style.display = "none";
 });
 
-/* Typing Effect */
+/* ✅ Matrix Effect */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+const fontSize = 12;
+const columns = canvas.width / fontSize;
+let drops = [];
+
+for (let i = 0; i < columns; i++) drops[i] = 1;
+
+setInterval(() => {
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00ffe5";
+    ctx.font = fontSize + "px Courier";
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+            drops[i] = 0;
+        drops[i]++;
+    }
+}, 35);
+
+/* ✅ Typing Effect */
 const displayText = `ASSALAMU ALAIKUM...
 
 CYBER SENTINEL BANGLADESH
 OFFICIAL CYBER WARNING SYSTEM
 
-ACTION BY: ALEX HUNTER
+ACTION BY: Net Joddha
 TEAM: CSB`;
 
 const outDiv = document.getElementById("out");
