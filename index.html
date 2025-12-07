@@ -12,7 +12,7 @@ body {
     background: #000;
     font-family: 'Courier New', monospace;
     color: #00ffe5;
-    overflow-y: auto;   /* ✅ PAGE SCROLL ON */
+    overflow-y: auto;
     user-select: none;
 }
 
@@ -29,7 +29,7 @@ body {
 /* Logo */
 #logo {
     display: block;
-    margin: 30px auto;
+    margin: 30px auto 10px auto;
     width: 180px;
     height: 180px;
     border-radius: 50%;
@@ -42,11 +42,11 @@ body {
     100% { filter: drop-shadow(0 0 40px #00ffe5); }
 }
 
-/* ✅ SCROLLABLE Typing Box */
+/* Typing Box (scrollable + bold text) */
 #box {
     max-width: 800px;
     width: 85%;
-    margin: 20px auto 10px auto;
+    margin: 15px auto 10px auto;
     padding: 25px;
     border: 2px solid #00ffe5;
     border-radius: 15px;
@@ -54,12 +54,13 @@ body {
     background: rgba(0,0,0,0.6);
     font-size: 18px;
     line-height: 1.7;
+    font-weight: 600;          /* ✅ লেখা একটু bold */
 
-    max-height: 60vh;     /* ✅ Box fixed height */
-    overflow-y: auto;    /* ✅ Box scroll ON */
+    max-height: 60vh;
+    overflow-y: auto;
 }
 
-/* Box Scrollbar */
+/* Box scrollbar */
 #box::-webkit-scrollbar {
     width: 6px;
 }
@@ -70,29 +71,39 @@ body {
 
 #out { white-space: pre-wrap; }
 
-/* Facebook Box */
+/* Telegram Box (আগের FB বক্সের জায়গায়) */
 #fb-box {
-    max-width: 250px;
-    width: 70%;
-    margin: 25px auto;
+    max-width: 280px;
+    width: 75%;
+    margin: 25px auto 10px auto;
     padding: 12px 15px;
-    border: 2px solid #FFD700;
+    border: 2px solid #29a9ea;
     border-radius: 12px;
-    box-shadow: 0 0 20px #FFD700;
-    background: rgba(0,0,0,0.35);
+    box-shadow: 0 0 20px #29a9ea;
+    background: rgba(0,0,0,0.4);
     text-align: center;
 }
 #fb-box a {
-    color: #FFD700;
+    color: #29a9ea;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     font-weight: bold;
 }
 #fb-icon {
-    width: 28px;
-    filter: drop-shadow(0 0 5px #FFD700);
+    width: 26px;
+    filter: drop-shadow(0 0 5px #29a9ea);
+}
+
+/* Footer text */
+#footer {
+    text-align: center;
+    color: #00ffe5;
+    font-size: 14px;
+    margin: 15px 0 20px 0;
+    opacity: 0.85;
 }
 
 /* Tap Layer */
@@ -107,6 +118,118 @@ body {
     #logo { width: 140px; height: 140px; }
     #box  { font-size: 15px; max-height: 65vh; }
 }
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<img id="logo" src="https://j.top4top.io/p_36272ejkx2.jpg" alt="CSB Logo">
+
+<div id="box">
+    <div id="out"></div>
+</div>
+
+<!-- 🔵 Telegram Button -->
+<div id="fb-box">
+    <a href="https://t.me/Net_joddha_official" target="_blank">
+        <img id="fb-icon"
+        src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg"
+        alt="Telegram">
+        @Net_joddha_official
+    </a>
+</div>
+
+<!-- Footer -->
+<div id="footer">
+    Cyber Sentinel Bangladesh
+</div>
+
+<!-- 🔊 Background Music -->
+<audio id="bg-music" autoplay loop>
+    <source src="hacker77.mp3" type="audio/mpeg">
+</audio>
+
+<div id="tapLayer"></div>
+
+<script>
+/* Mobile Autoplay Fix */
+const music = document.getElementById("bg-music");
+const tap = document.getElementById("tapLayer");
+
+music.volume = 0.7;
+window.onload = () => {
+    music.play().catch(()=>{});
+};
+
+tap.addEventListener("click", () => {
+    music.play();
+    tap.style.display = "none";
+});
+
+/* Matrix Effect */
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+const fontSize = 12;
+const columns = canvas.width / fontSize;
+let drops = [];
+
+for (let i = 0; i < columns; i++) drops[i] = 1;
+
+setInterval(() => {
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00ffe5";
+    ctx.font = fontSize + "px Courier";
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
+            drops[i] = 0;
+        drops[i]++;
+    }
+}, 35);
+
+/* Typing Effect */
+const displayText = `ASSALAMU ALAIKUM...
+
+⚠️ CYBER SECURITY ALERT ⚠️
+
+অনলাইন প্রতারণা, ফিশিং ও ভুয়া প্রমোশন —
+এবার আর কিছুই লুকানো থাকবে না।
+
+CYBER SENTINEL BANGLADESH টিম
+আপনার সকল সন্দেহজনক অনলাইন কার্যক্রম
+ডিজিটালভাবে সংরক্ষণ ও পর্যবেক্ষণ করতে সক্ষম।
+
+নিজে সেফ থাকুন,
+অন্যকেও সেফ রাখুন —
+Respect Everyone.
+
+Action By: Net Joddha
+Powered By: CSB Team`;
+
+const outDiv = document.getElementById("out");
+let i = 0;
+
+function typeText() {
+    if (i < displayText.length) {
+        outDiv.textContent += displayText.charAt(i);
+        i++;
+        setTimeout(typeText, 35);
+    }
+}
+typeText();
+</script>
+
+</body>
+</html>}
 </style>
 </head>
 
