@@ -29,9 +29,9 @@ body {
 /* Logo */
 #logo {
     display: block;
-    margin: 30px auto;
-    width: 180px;
-    height: 180px;
+    margin: 25px auto;
+    width: 170px;
+    height: 170px;
     border-radius: 50%;
     object-fit: cover;
     animation: logoGlow 2s infinite alternate;
@@ -42,27 +42,39 @@ body {
     100% { filter: drop-shadow(0 0 40px #00ffe5); }
 }
 
-/* Typing Box */
+/* ✅ FIXED Typing Box (Scrollable) */
 #box {
-    max-width: 800px;
-    width: 80%;
-    margin: 20px auto 10px auto;
-    padding: 30px;
+    max-width: 850px;
+    width: 88%;
+    margin: 15px auto 10px auto;
+    padding: 22px;
     border: 2px solid #00ffe5;
     border-radius: 15px;
     box-shadow: 0 0 40px #00ffe5;
-    background: rgba(0,0,0,0.5);
-    font-size: 20px;
-    line-height: 1.6;
-    min-height: 200px;
+    background: rgba(0,0,0,0.6);
+    font-size: 17px;
+    line-height: 1.7;
+
+    max-height: 58vh;     /* ✅ এখন স্ক্রিন অনুযায়ী সীমা */
+    overflow-y: auto;    /* ✅ লেখা বেশি হলে স্ক্রল হবে */
 }
+
+/* Scrollbar style */
+#box::-webkit-scrollbar {
+    width: 6px;
+}
+#box::-webkit-scrollbar-thumb {
+    background: #00ffe5;
+    border-radius: 10px;
+}
+
 #out { white-space: pre-wrap; }
 
 /* Facebook Box */
 #fb-box {
     max-width: 250px;
     width: 70%;
-    margin: 30px auto;
+    margin: 20px auto;
     padding: 12px 15px;
     border: 2px solid #FFD700;
     border-radius: 12px;
@@ -88,6 +100,12 @@ body {
     position: fixed;
     inset: 0;
     z-index: 9999;
+}
+
+/* ✅ Mobile Responsive */
+@media(max-width:600px){
+    #logo { width: 140px; height: 140px; }
+    #box  { font-size: 15px; max-height: 60vh; }
 }
 </style>
 </head>
@@ -115,16 +133,14 @@ body {
     <source src="আম্মু জান.mp3" type="audio/mpeg">
 </audio>
 
-<!-- ✅ Tap Layer (Mobile Fix) -->
 <div id="tapLayer"></div>
 
 <script>
-/* ✅ 100% Mobile Autoplay Fix */
+/* ✅ Mobile Autoplay Fix */
 const music = document.getElementById("bg-music");
 const tap = document.getElementById("tapLayer");
 
 music.volume = 0.7;
-
 window.onload = () => {
     music.play().catch(()=>{});
 };
@@ -162,24 +178,14 @@ setInterval(() => {
     }
 }, 35);
 
-/* ✅ UPDATED Typing Effect Text */
+/* ✅ Typing Effect */
 const displayText = `ASSALAMU ALAIKUM...
 
-⚠️ CYBER SECURITY ALERT ⚠️
+CYBER SENTINEL BANGLADESH
+OFFICIAL CYBER WARNING SYSTEM
 
-অনলাইন প্রতারণা, ফিশিং ও ভুয়া প্রমোশন —
-এবার আর কিছুই লুকানো থাকবে না।
-
-CYBER SENTINEL BANGLADESH টিম
-আপনার সকল সন্দেহজনক অনলাইন কার্যক্রম
-ডিজিটালভাবে সংরক্ষণ ও পর্যবেক্ষণ করতে সক্ষম।
-
-নিজে সেফ থাকুন,
-অন্যকেও সেফ রাখুন —
-Respect Everyone.
-
-Action By: Net Joddha
-Powered By: CSB Team`;
+ACTION BY: Net Joddha
+TEAM: CSB`;
 
 const outDiv = document.getElementById("out");
 let i = 0;
@@ -188,7 +194,7 @@ function typeText() {
     if (i < displayText.length) {
         outDiv.textContent += displayText.charAt(i);
         i++;
-        setTimeout(typeText, 45);
+        setTimeout(typeText, 30);
     }
 }
 typeText();
