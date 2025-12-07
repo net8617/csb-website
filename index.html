@@ -12,7 +12,7 @@ body {
     background: #000;
     font-family: 'Courier New', monospace;
     color: #00ffe5;
-    overflow: hidden;
+    overflow-y: auto;   /* ✅ PAGE SCROLL ON */
     user-select: none;
 }
 
@@ -29,9 +29,9 @@ body {
 /* Logo */
 #logo {
     display: block;
-    margin: 25px auto;
-    width: 170px;
-    height: 170px;
+    margin: 30px auto;
+    width: 180px;
+    height: 180px;
     border-radius: 50%;
     object-fit: cover;
     animation: logoGlow 2s infinite alternate;
@@ -42,24 +42,24 @@ body {
     100% { filter: drop-shadow(0 0 40px #00ffe5); }
 }
 
-/* ✅ FIXED Typing Box (Scrollable) */
+/* ✅ SCROLLABLE Typing Box */
 #box {
-    max-width: 850px;
-    width: 88%;
-    margin: 15px auto 10px auto;
-    padding: 22px;
+    max-width: 800px;
+    width: 85%;
+    margin: 20px auto 10px auto;
+    padding: 25px;
     border: 2px solid #00ffe5;
     border-radius: 15px;
     box-shadow: 0 0 40px #00ffe5;
     background: rgba(0,0,0,0.6);
-    font-size: 17px;
+    font-size: 18px;
     line-height: 1.7;
 
-    max-height: 58vh;     /* ✅ এখন স্ক্রিন অনুযায়ী সীমা */
-    overflow-y: auto;    /* ✅ লেখা বেশি হলে স্ক্রল হবে */
+    max-height: 60vh;     /* ✅ Box fixed height */
+    overflow-y: auto;    /* ✅ Box scroll ON */
 }
 
-/* Scrollbar style */
+/* Box Scrollbar */
 #box::-webkit-scrollbar {
     width: 6px;
 }
@@ -74,7 +74,7 @@ body {
 #fb-box {
     max-width: 250px;
     width: 70%;
-    margin: 20px auto;
+    margin: 25px auto;
     padding: 12px 15px;
     border: 2px solid #FFD700;
     border-radius: 12px;
@@ -95,17 +95,17 @@ body {
     filter: drop-shadow(0 0 5px #FFD700);
 }
 
-/* Hidden Tap Layer for Mobile Autoplay */
+/* Tap Layer */
 #tapLayer {
     position: fixed;
     inset: 0;
     z-index: 9999;
 }
 
-/* ✅ Mobile Responsive */
+/* Mobile */
 @media(max-width:600px){
     #logo { width: 140px; height: 140px; }
-    #box  { font-size: 15px; max-height: 60vh; }
+    #box  { font-size: 15px; max-height: 65vh; }
 }
 </style>
 </head>
@@ -130,7 +130,7 @@ body {
 
 <!-- ✅ AUTO SONG -->
 <audio id="bg-music" autoplay loop>
-    <source src="আম্মু জান.mp3" type="audio/mpeg">
+    <source src="hacker77.mp3" type="audio/mpeg">
 </audio>
 
 <div id="tapLayer"></div>
@@ -181,11 +181,21 @@ setInterval(() => {
 /* ✅ Typing Effect */
 const displayText = `ASSALAMU ALAIKUM...
 
-CYBER SENTINEL BANGLADESH
-OFFICIAL CYBER WARNING SYSTEM
+⚠️ CYBER SECURITY ALERT ⚠️
 
-ACTION BY: Net Joddha
-TEAM: CSB`;
+অনলাইন প্রতারণা, ফিশিং ও ভুয়া প্রমোশন —
+এবার আর কিছুই লুকানো থাকবে না।
+
+CYBER SENTINEL BANGLADESH টিম
+আপনার সকল সন্দেহজনক অনলাইন কার্যক্রম
+ডিজিটালভাবে সংরক্ষণ ও পর্যবেক্ষণ করতে সক্ষম।
+
+নিজে সেফ থাকুন,
+অন্যকেও সেফ রাখুন —
+Respect Everyone.
+
+Action By: Net Joddha
+Powered By: CSB Team`;
 
 const outDiv = document.getElementById("out");
 let i = 0;
@@ -194,7 +204,7 @@ function typeText() {
     if (i < displayText.length) {
         outDiv.textContent += displayText.charAt(i);
         i++;
-        setTimeout(typeText, 30);
+        setTimeout(typeText, 35);
     }
 }
 typeText();
